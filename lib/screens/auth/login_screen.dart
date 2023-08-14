@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:tis_analytic/common/const.dart';
+import 'package:tis_analytic/data/auth_services.dart';
 import 'package:tis_analytic/screens/auth/register_screen.dart';
 import 'package:tis_analytic/screens/home/home_screen.dart';
 import 'package:tis_analytic/widgets/cutom_button.dart';
@@ -62,8 +63,12 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomButton(
                 text: 'Login',
                 onPressed: () {
-                  box.put('isLogin', true);
+                  // box.put('isLogin', true);
                   Get.to(const HomeScreen());
+                  // AuthServices().login(
+                  //   username: '',
+                  //   password: '',
+                  // );
                 },
               )
             ],

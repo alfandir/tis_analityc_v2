@@ -45,9 +45,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                      Get.offAll(const LoginScreen())?.then((value) {
-                        box.clear();
-                      });
+                      box.clear();
+
+                      Get.offAll(const LoginScreen());
                     },
                     icon: Icon(Icons.logout, color: primaryColor),
                     label: Text(
@@ -64,26 +64,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 fit: BoxFit.contain,
               ),
               verticalRegular,
-              // Container(
-              //   width: double.infinity,
-              //   height: MediaQuery.of(context).size.height / 4,
-              //   decoration: BoxDecoration(
-              //     color: Colors.grey,
-              //     borderRadius: BorderRadius.circular(4),
-              //   ),
-              // )
-              // GridView.count(
-              //   shrinkWrap: true,
-              //   crossAxisCount: 4,
-              //   mainAxisSpacing: 8,
-              //   crossAxisSpacing: 16,
-              //   children: [
-              //     CircleAvatar(child: Icon(Icons.drafts)),
-              //     CircleAvatar(child: Icon(Icons.abc)),
-              //     CircleAvatar(child: Icon(Icons.abc)),
-              //     CircleAvatar(child: Icon(Icons.abc)),
-              //   ],
-              // )
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -96,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    contentPadding: EdgeInsets.all(16),
+                    contentPadding: const EdgeInsets.all(16),
                     // tileColor: Colors.green,
                     title: Text(
                       'Kelas ${index + 1}',

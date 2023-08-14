@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tis_analytic/common/const.dart';
 import 'package:tis_analytic/data/config.dart';
 
 class Api {
@@ -12,7 +13,7 @@ class Api {
   Api._() {
     dio.options.baseUrl = Apis.baseUrl;
 
-    final token = Hive.box('auth').get('token', defaultValue: '');
+    final token = Hive.box(boxUser).get('token', defaultValue: '');
     dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
