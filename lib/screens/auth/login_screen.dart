@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tis_analytic/common/const.dart';
+import 'package:tis_analytic/screens/auth/register_screen.dart';
+import 'package:tis_analytic/widgets/cutom_button.dart';
 
-import 'widgets/text_form_field_widget.dart';
+import '../../widgets/text_form_field_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             verticalMassive,
             Image.asset('assets/img/livin.png', scale: 6),
-            verticalRegular,
+            verticalMassive,
             const TextFormFieldWidget(
               hintText: 'Username',
             ),
@@ -46,27 +49,16 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             verticalRegular,
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.orange[200]),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(
-                    color: Colors.lightBlue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+            TextButton(
+              child: const Text('Sign up?'),
+              onPressed: () {
+                Get.to(const RegisterScreen());
+              },
+            ),
+            verticalRegular,
+            CustomButton(
+              text: 'Login',
+              onPressed: () {},
             )
           ],
         ),

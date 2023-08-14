@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tis_analytic/login_screen.dart';
+import 'package:get/get.dart';
+import 'package:tis_analytic/screens/auth/login_screen.dart';
 
 import 'common/theme.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'TIS Analytic',
       theme: PoppinsTheme.lightTheme(),
       darkTheme: PoppinsTheme.darkTheme(),
