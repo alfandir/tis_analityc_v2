@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tis_analytic/common/colors.dart';
 import 'package:tis_analytic/common/const.dart';
+import 'package:tis_analytic/screens/auth/login_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -10,6 +13,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  Box box = Hive.box(boxUser);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,7 +44,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.offAll(const LoginScreen())?.then((value) {
+                        box.clear();
+                      });
+                    },
                     icon: Icon(Icons.logout, color: primaryColor),
                     label: Text(
                       'Keluar',

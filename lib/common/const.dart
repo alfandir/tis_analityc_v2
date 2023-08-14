@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-const boxUser = 'boxUser';
+const String boxUser = 'boxUser';
 
 const verticalTiny = SizedBox(height: 4);
 const verticalSmall = SizedBox(height: 8);

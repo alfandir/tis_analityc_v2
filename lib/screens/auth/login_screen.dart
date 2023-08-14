@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:tis_analytic/common/const.dart';
 import 'package:tis_analytic/screens/auth/register_screen.dart';
 import 'package:tis_analytic/screens/home/home_screen.dart';
@@ -16,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isObscured = true;
-
+  Box box = Hive.box(boxUser);
   void _togglePasswordVisibility() {
     setState(() {
       _isObscured = !_isObscured;
@@ -28,42 +29,45 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            verticalMassive,
-            Image.asset('assets/img/livin.png', scale: 6),
-            verticalMassive,
-            const TextFormFieldWidget(
-              hintText: 'Username',
-            ),
-            verticalRegular,
-            TextFormFieldWidget(
-              hintText: 'Password',
-              obscureText: _isObscured,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _isObscured ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: _togglePasswordVisibility,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              verticalMassive,
+              Image.asset('assets/img/livin.png', scale: 6),
+              verticalMassive,
+              const TextFormFieldWidget(
+                hintText: 'Username',
               ),
-            ),
-            verticalRegular,
-            TextButton(
-              child: const Text('Sign up?'),
-              onPressed: () {
-                Get.to(const RegisterScreen());
-              },
-            ),
-            verticalRegular,
-            CustomButton(
-              text: 'Login',
-              onPressed: () {
-                Get.to(HomeScreen());
-              },
-            )
-          ],
+              verticalRegular,
+              TextFormFieldWidget(
+                hintText: 'Password',
+                obscureText: _isObscured,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isObscured ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: _togglePasswordVisibility,
+                ),
+              ),
+              verticalRegular,
+              TextButton(
+                child: const Text('Sign up?'),
+                onPressed: () {
+                  Get.to(const RegisterScreen());
+                },
+              ),
+              verticalRegular,
+              CustomButton(
+                text: 'Login',
+                onPressed: () {
+                  box.put('isLogin', true);
+                  Get.to(const HomeScreen());
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
