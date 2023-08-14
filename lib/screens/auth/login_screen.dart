@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tis_analytic/common/const.dart';
 import 'package:tis_analytic/screens/auth/register_screen.dart';
+import 'package:tis_analytic/screens/home/home_screen.dart';
 import 'package:tis_analytic/widgets/cutom_button.dart';
 
 import '../../widgets/text_form_field_widget.dart';
@@ -58,7 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
             verticalRegular,
             CustomButton(
               text: 'Login',
-              onPressed: () {},
+              onPressed: () {
+                Get.to(HomeScreen());
+              },
             )
           ],
         ),
