@@ -1,20 +1,17 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:tis_analytic/data/api.dart';
+import 'package:tis_analytic/model/auth_model.dart';
 
 class AuthServices {
-  final api = Api.instance;
+  final api = ApiBaseHelper.noToken();
 
-  Future login({
+  Future<AuthModel> login({
     String? username,
     String? password,
   }) async {
     var res = await api.post('login', data: {
-      'username': username,
+      'email': username,
       'password': password,
     });
-    log(jsonEncode(res));
-    return res;
+    return AuthModel.fromJson(res);
   }
 }
