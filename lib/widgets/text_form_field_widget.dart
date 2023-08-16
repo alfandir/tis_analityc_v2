@@ -34,8 +34,9 @@ class TextFormFieldWidget extends StatelessWidget {
       controller: controller,
       enabled: enabled,
       validator: (val) {
+        if (val?.isNotEmpty ?? true) return null;
         if (validatorText?.isEmpty ?? true) return null;
-        return validatorText;
+        if (validatorText?.isNotEmpty ?? false) return validatorText;
       },
       keyboardType: keyboardType,
       decoration: InputDecoration(
