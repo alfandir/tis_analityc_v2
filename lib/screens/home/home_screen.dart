@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tis_analytic/screens/dashboard_screen.dart';
+import 'package:tis_analytic/screens/data/data_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> listPage = const [
     DashboardScreen(),
-    DashboardScreen(),
+    DataScreen(),
     DashboardScreen(),
     DashboardScreen(),
   ];

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tis_analytic/common/colors.dart';
 import 'package:tis_analytic/common/const.dart';
 import 'package:tis_analytic/provider/auth_provider.dart';
+import 'package:tis_analytic/provider/club_provider.dart';
 import 'package:tis_analytic/screens/auth/login_screen.dart';
 import 'package:tis_analytic/screens/home/home_screen.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AuthProvider>(create: (_) => AuthProvider()),
+        Provider<ClubProvider>(create: (_) => ClubProvider()),
       ],
       child: GetMaterialApp(
         title: 'TIS Analytic',
