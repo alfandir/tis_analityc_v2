@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +42,16 @@ class _DataScreenState extends State<DataScreen> {
           title: const Text('Data Club'),
           elevation: 0,
           backgroundColor: primaryColor,
+          actions: [
+            TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                minimumSize: Size.zero, // Set this
+                padding: EdgeInsets.all(8), // and this
+              ),
+              child: Text('Tambah', style: TextStyle(color: Colors.white)),
+            )
+          ],
         ),
         body: Center(
           child: RefreshIndicator(
@@ -67,9 +79,30 @@ class _DataScreenState extends State<DataScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(16),
                       // tileColor: Colors.green,
-                      title: Text(
-                        data.name ?? '',
-                        style: Theme.of(context).textTheme.headline5,
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              data.name ?? '',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                          ),
+                          PopupMenuButton(
+                            itemBuilder: (context) {
+                              return [
+                                PopupMenuItem(
+                                  value: 0,
+                                  child: Text('edit'.toUpperCase()),
+                                ),
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Text('hapus'.toUpperCase()),
+                                ),
+                              ];
+                            },
+                            onSelected: (value) {},
+                          )
+                        ],
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
