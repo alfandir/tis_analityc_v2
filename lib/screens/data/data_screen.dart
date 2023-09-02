@@ -1,12 +1,18 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:tis_analytic/common/colors.dart';
+import 'package:tis_analytic/data/club_services.dart';
 import 'package:tis_analytic/model/club_model.dart';
 import 'package:tis_analytic/provider/club_provider.dart';
 import 'package:tis_analytic/widgets/custom_future_builder.dart';
+import 'package:tis_analytic/widgets/cutom_button.dart';
+import 'package:tis_analytic/widgets/text_form_field_widget.dart';
 
 import '../../common/const.dart';
 
@@ -18,11 +24,13 @@ class DataScreen extends StatefulWidget {
 }
 
 class _DataScreenState extends State<DataScreen> {
+  TextEditingController namaController = TextEditingController();
+
   Box box = Hive.box(boxUser);
   Future? init;
 
   Future getClub() async {
-    var userId = box.get('id');
+    var userId = box.get('userId');
     var prov = Provider.of<ClubProvider>(context, listen: false);
     init = prov.getClub(id: '$userId');
     return init;
@@ -44,24 +52,25 @@ class _DataScreenState extends State<DataScreen> {
           backgroundColor: primaryColor,
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () => _showAddBottomSheet(context),
               style: TextButton.styleFrom(
                 minimumSize: Size.zero, // Set this
-                padding: EdgeInsets.all(8), // and this
+                padding: const EdgeInsets.all(8), // and this
               ),
-              child: Text('Tambah', style: TextStyle(color: Colors.white)),
+              child:
+                  const Text('Tambah', style: TextStyle(color: Colors.white)),
             )
           ],
         ),
         body: Center(
           child: RefreshIndicator(
             onRefresh: () async {
-              getClub();
+              getClub().then((value) => setState(() {}));
             },
             child: CustomFutureBuilder(
               future: init,
               refreshError: () {
-                getClub();
+                getClub().then((value) => setState(() {}));
               },
               child: Consumer<ClubProvider>(
                 builder: (context, club, _) => ListView.separated(
@@ -100,7 +109,23 @@ class _DataScreenState extends State<DataScreen> {
                                 ),
                               ];
                             },
-                            onSelected: (value) {},
+                            onSelected: (val) {
+                              switch (val) {
+                                case 0:
+                                  _showAddBottomSheet(context,
+                                      name: data.name, clubId: '${data.id}');
+                                  break;
+                                case 1:
+                                  context
+                                      .read<ClubProvider>()
+                                      .delete(clubId: '${data.id}')
+                                      .then((a) => getClub().then(
+                                            (b) => setState(() {}),
+                                          ));
+                                  break;
+                                default:
+                              }
+                            },
                           )
                         ],
                       ),
@@ -142,6 +167,68 @@ class _DataScreenState extends State<DataScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showAddBottomSheet(BuildContext context,
+      {String? name, String? clubId}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // Tutup dialog dengan mengetuk di luar dialog
+      builder: (BuildContext context) {
+        if (name?.isNotEmpty ?? false) {
+          namaController.text = name ?? '';
+        } else {
+          namaController.clear();
+        }
+        return Dialog(
+          insetPadding: const EdgeInsets.all(16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0), // Bentuk dialog
+          ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    (name?.isNotEmpty ?? false)
+                        ? 'Edit Club'
+                        : 'Tambahkan Club Baru',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  verticalSmall,
+                  TextFormFieldWidget(
+                    labelText: 'Nama Club',
+                    controller: namaController,
+                  ),
+                  verticalRegular,
+                  CustomButton(
+                    backgroundColor: primaryColor,
+                    textColor: Colors.white,
+                    text: 'SIMPAN',
+                    onPressed: () => (name?.isNotEmpty ?? false)
+                        ? context
+                            .read<ClubProvider>()
+                            .edit(name: namaController.text, clubId: clubId)
+                            .then((value) => Get.back())
+                        : context
+                            .read<ClubProvider>()
+                            .store(
+                              name: namaController.text,
+                            )
+                            .then((value) => Get.back()),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

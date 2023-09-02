@@ -16,6 +16,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (res.status == 'success') {
       box.put('isLogin', true);
+      box.put('userId', res.data?.id);
       box.put('name', res.data?.name);
       box.put('email', res.data?.email);
       box.put('token', res.data?.apiToken);

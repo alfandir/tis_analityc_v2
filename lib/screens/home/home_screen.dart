@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment),
-            label: 'Pesanan',
+            label: 'Club',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
